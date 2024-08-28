@@ -2,7 +2,7 @@ from PIL import Image
 from tkinter import Tk, filedialog
 import sys
 
-# Function to display custom ASCII art
+
 def print_ascii_art():
     ascii_art = """
     888                      888    d8b  .d888          
@@ -22,7 +22,7 @@ def print_ascii_art():
     """
     print(ascii_art)
 
-# Function to choose an ASCII character set
+
 def choose_ascii_set():
     sets = {
         "1": "@%#*+=-:. ",
@@ -39,7 +39,7 @@ def choose_ascii_set():
         else:
             print("Invalid choice. Please choose a valid option.")
 
-# Function to choose image size
+
 def choose_size_option():
     size_options = {
         "1": "Small",
@@ -78,7 +78,7 @@ def map_pixels_to_ascii(image):
     pixels = image.getdata()
     ascii_str = ""
     for i, pixel in enumerate(pixels):
-        if i % (len(pixels) // 100) == 0:  # Update progress every 1%
+        if i % (len(pixels) // 100) == 0:  
             sys.stdout.write(f"\rProcessing: {i * 100 // len(pixels)}%")
             sys.stdout.flush()
         ascii_str += ASCII_CHARS[min(pixel // (256 // len(ASCII_CHARS)), len(ASCII_CHARS) - 1)]
@@ -107,17 +107,17 @@ def display_ascii_in_console(ascii_art):
     print(ascii_art)
 
 def main():
-    # Print the custom ASCII art at the very beginning
+  
     print_ascii_art()
     
-    # Choose ASCII character set
+
     global ASCII_CHARS
     ASCII_CHARS = choose_ascii_set()
     
-    # Hide the root Tk window
+    
     Tk().withdraw()
 
-    # Open file dialog with correct filters
+    
     image_path = filedialog.askopenfilename(
         title="Select an Image File", 
         filetypes=[
@@ -140,19 +140,19 @@ def main():
         print(f"Cannot open image. Unsupported file format or file is corrupted. Error: {e}")
         return
 
-    # Choose image size
+    
     size_option = choose_size_option()
 
-    # Ask if the user wants to maintain the aspect ratio
+    
     maintain_aspect_ratio = input("\nMaintain aspect ratio? (y/n): ").strip().lower() == "y"
 
-    # Convert the image to ASCII
+    
     ascii_art = convert_image_to_ascii(image, size_option, maintain_aspect_ratio)
     
-    # Display the ASCII art
+    
     display_ascii_in_console(ascii_art)
     
-    # Optionally save the ASCII art to a file
+    
     save_ascii_to_file(ascii_art)
 
 if __name__ == "__main__":
